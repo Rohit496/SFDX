@@ -31,16 +31,17 @@ jobs:
         with:
          # Authorize a Salesforce org using an SFDX auth URL
          sfdx-auth-url: ${{ secrets.DEVHUB_URL }}
+      #Sets default devhub org for us to create scratch org   
       - name: Set Default DevHub
-        run: sfdx force:config:set defaultdevhubusername=sfdxdemo@salesforce.com 
+        run: sfdx force:config:set defaultdevhubusername=sfdxdemo@salesforce.com
+      - name: Create Scratch Org
+        run: sfdx force:org:create -a actionBuild -d 1 -f config/project-scratch-def.json -s
+        
+      - name: Pushing Source
+        run: sfdx force:source:push -f
+      
+      - name: Deleting Scratch Org
+        run: sfdx force:org:delete -p 
          
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+     
