@@ -40,7 +40,8 @@ jobs:
       - name: Pushing Source
         run: sfdx force:source:push -f
       
-      
+      - name: Deleting Scratch Org
+        run: sfdx force:org:delete -p 
          
 
      
